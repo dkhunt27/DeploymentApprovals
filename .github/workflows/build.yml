@@ -2,6 +2,13 @@ name: CI
 
 on:
   workflow_dispatch:
+    inputs:
+      projects:
+        description: 'projects to deploy'
+        required: true
+      version:
+        description: 'version to deploy'
+        required: true
 
 jobs:
   build:
@@ -12,18 +19,14 @@ jobs:
 
       - name: Simulate a Build
         run: echo 'hello youtube' > output.txt
-        
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v2.2.4
-        with:          
-          name: 'your-artifact-name'
-          path: 'output.txt'
           
       - name: Create an issue
         uses: JasonEtco/create-an-issue@v2.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ENVIRONMENT: Dev
-          RUNNUMBER: ${{ github.run_number  }}
+          ENVIRONMENT: dev
+          RUN_NUMBER: ${{ github.run_number  }}
+          PROJECTS: ${{ inputs.projects  }}
+          VERSION: ${{ inputs.version  }}
         with:         
-          filename: .github/deployment-approval.md
+          filename: .github/issues/deployment-approval.md

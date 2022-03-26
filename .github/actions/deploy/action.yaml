@@ -1,0 +1,23 @@
+name: Deploy
+inputs:
+  projects:
+    description: 'projects to deploy'
+    required: true
+  version:
+    description: 'Docker image version to deploy'
+    required: true
+  env:
+    description: 'APP_ENV to use'
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Deploy to ${{ inputs.env }}
+      run: echo "Simulating Deployment ${{ inputs.projects }} ${{ inputs.version }} ${{ inputs.env }}     
+        
+    - name: Close Deploy Approval Issue
+      uses: ./.github/actions/close-deploy-issue

@@ -1,0 +1,14 @@
+name: Close Deploy Approval Issue
+inputs:
+  github-token:
+    description: Github token
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Close Issue
+      uses: peter-evans/close-issue@v1.0.3
+      with:
+        token: ${{ inputs.github-token }}
+        comment: 'Deployment Completed 🌟'
