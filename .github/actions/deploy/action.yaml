@@ -1,5 +1,8 @@
 name: Deploy
 inputs:
+  githubToken:
+    description: 'github token'
+    required: true
   projects:
     description: 'projects to deploy'
     required: true
@@ -23,6 +26,6 @@ runs:
     - name: Update deploy issue with env labels
       uses: KeisukeYamashita/attach-labels@v1
       with:
-        token: ${{ secrets.GITHUB_TOKEN }}
+        token: ${{ inputs.githubToken }}
         number: ${{ steps.deployIssue.outputs.number }}
         labels: ${{ inputs.env }}
