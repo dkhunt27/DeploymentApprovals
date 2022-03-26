@@ -20,7 +20,7 @@ runs:
       uses: actions/checkout@v2
 
     - name: Deploy to ${{ inputs.env }}
-      run: echo "Simulating Deployment ${{ inputs.projects }} ${{ inputs.version }} ${{ inputs.env }}
+      run: echo "Simulating Deployment ${{ inputs.projects }} ${{ inputs.version }} ${{ inputs.env }}"
       shell: bash     
         
     - name: Update deploy issue with env labels
