@@ -16,6 +16,11 @@ jobs:
     outputs:
       matrix: ${{ steps.set-matrix.outputs.matrix }}
     steps:
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
       - id: set-matrix
         run: |
           PARSED_PROJECTS=`node -e 'const projects=("${{ github.event.inputs.projects }}").split(","); console.log(JSON.stringify(projects).replaceAll("\"","\\\\\""))'`
