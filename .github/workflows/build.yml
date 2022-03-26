@@ -23,7 +23,8 @@ jobs:
 
       - id: set-matrix
         run: |
-          echo "::set-output name=matrix::`node -e 'const projects=("${{ github.event.inputs.projects }}").split(","); console.log(JSON.stringify(projects).replaceAll("\\"","\\\\\\""))'`"
+          npm install @actions/core
+          node -e 'const core=require('@actions/core'); const projects=("${{ github.event.inputs.projects }}").split(","); core.setOutput("matrix", JSON.stringify(projects).replaceAll("\\"","\\\\\\""))'`"
 
 
   create:
