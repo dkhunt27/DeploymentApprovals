@@ -7,7 +7,7 @@ on:
 
 jobs:  
   parse:
-    if: ${{ !github.event.issue.pull_request && github.event.comment.body == 'Approved' }}
+    if: ${{ !github.event.issue.pull_request && contains(github.event.comment.body, '/deploy') }}
     runs-on: ubuntu-latest
     outputs:
       deploy-environment: ${{ fromJSON(steps.issue_body_parser.outputs.payload).environment }}
