@@ -11,11 +11,23 @@ on:
         required: true
 
 jobs:  
+  parse:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.set-matrix.outputs.matrix }}
+    steps:
+      - id: set-matrix
+        run: |
+          echo ${{ inputs.projects }}
+          echo "::set-output name=matrix::${{ inputs.projects }}"
+
+
   create:
+    needs: parse
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        value: ${{fromJSON(inputs.projects)}}
+        value: ${{fromJSON(needs.parse.outputs.matrix)}}
     steps:
       - uses: actions/checkout@v2
 
