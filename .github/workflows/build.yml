@@ -24,7 +24,8 @@ jobs:
       - id: set-matrix
         run: |
           npm install @actions/core
-          node -e 'const core=require("@actions/core"); const projects=("${{ github.event.inputs.projects }}").split(","); core.setOutput("matrix", JSON.stringify(projects).replaceAll("\"","\\\""))'
+          node -e 'const core=require("@actions/core"); const projects=("${{ github.event.inputs.projects }}").split(","); core.setOutput("matrix2", JSON.stringify(projects).replaceAll("\"","\\\""))'
+          node -e 'const core=require("@actions/core"); const projects=("${{ github.event.inputs.projects }}").split(","); core.setOutput("matrix", JSON.stringify(projects))'
 
   create:
     needs: parse
