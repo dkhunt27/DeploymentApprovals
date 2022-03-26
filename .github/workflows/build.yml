@@ -18,7 +18,9 @@ jobs:
     steps:
       - id: set-matrix
         run: |
+          node -e 'const projects="${{ github.event.inputs.projects }}"; process.env.PARSED_PROJECTS=JSON.stringify(JSON.parse("[" + projects + "]"))';
           echo ${{ github.event.inputs.projects }}
+          echo ${{ env.PARSED_PROJECTS }}
           echo "::set-output name=matrix::${{ github.event.inputs.projects }}"
 
 
