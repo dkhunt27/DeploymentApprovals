@@ -34,6 +34,6 @@ runs:
     - name: Update deploy issue with project labels
       uses: KeisukeYamashita/attach-labels@v1
       with:
-        GITHUB_TOKEN: ${{ inputs.githubToken }}
+        token: ${{ inputs.githubToken }}
         number: ${{ inputs.githubRunNumber  }}
         labels: ${{ inputs.project }}
