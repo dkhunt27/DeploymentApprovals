@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        value: ${{ inputs.projects }}
+        value: ${{fromJSON(inputs.projects)}}
     steps:
       - uses: actions/checkout@v2
 
