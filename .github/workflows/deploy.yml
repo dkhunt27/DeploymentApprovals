@@ -72,6 +72,7 @@ jobs:
     env:
       DEPLOY_ENV: prod
     steps:
+      - uses: actions/checkout@v2
               
       - name: Deploy to ${{ env.DEPLOY_ENV }}
         uses: ./.github/actions/deploy
