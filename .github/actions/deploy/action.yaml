@@ -3,13 +3,16 @@ inputs:
   githubToken:
     description: 'github token'
     required: true
+  issueNumber:
+    description: 'Issue number to update'
+    required: true
   project:
     description: 'project to deploy'
     required: true
   version:
     description: 'Docker image version to deploy'
     required: true
-  env:
+  environment:
     description: 'APP_ENV to use'
     required: true
 
@@ -19,19 +22,19 @@ runs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Deploy to ${{ inputs.env }}
-      run: echo "Simulating Deployment ${{ inputs.project }} ${{ inputs.version }} ${{ inputs.env }}"
+    - name: Deploy to ${{ inputs.environment }}
+      run: echo "Simulating Deployment ${{ inputs.project }} ${{ inputs.version }} ${{ inputs.environment }}"
       shell: bash     
         
     - name: Comment on Issue      
       uses: peter-evans/create-or-update-comment@v1
       with:
-        issue-number: ${{ steps.deployIssue.outputs.number }}
-        body: 'Deployment to ${{ inputs.env }} completed 🌟'
+        issue-number: ${{ inputs.issueNumber }}
+        body: 'Deployment to ${{ inputs.environment }} completed 🌟'
 
-    - name: Update deploy issue with env labels
+    - name: Update deploy issue with environment labels
       uses: KeisukeYamashita/attach-labels@v1
       with:
         token: ${{ inputs.githubToken }}
-        number: ${{ steps.deployIssue.outputs.number }}
-        labels: ${{ inputs.env }}
+        number: ${{ inputs.issueNumber }}
+        labels: ${{ inputs.environment }}

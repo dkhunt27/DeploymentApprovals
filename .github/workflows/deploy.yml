@@ -42,9 +42,10 @@ jobs:
         uses: ./.github/actions/deploy
         with: 
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          issueNumber: ${{ github.event.issue.number }}  
           project: ${{ needs.parse.outputs.project }} 
           version: ${{ needs.parse.outputs.version }}
-          env: ${{ env.DEPLOY_ENV }}
+          environment: ${{ env.DEPLOY_ENV }}
     
   deploy-test:
     needs: [parse]
@@ -59,9 +60,10 @@ jobs:
         uses: ./.github/actions/deploy
         with: 
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          issueNumber: ${{ github.event.issue.number }}  
           project: ${{ needs.parse.outputs.project }} 
           version: ${{ needs.parse.outputs.version }}
-          env: ${{ env.DEPLOY_ENV }}
+          environment: ${{ env.DEPLOY_ENV }}
 
   deploy-prod:
     needs: [parse]
@@ -75,9 +77,10 @@ jobs:
         uses: ./.github/actions/deploy
         with: 
           githubToken: ${{ secrets.GITHUB_TOKEN }}
+          issueNumber: ${{ github.event.issue.number }}  
           project: ${{ needs.parse.outputs.project }} 
           version: ${{ needs.parse.outputs.version }}
-          env: ${{ env.DEPLOY_ENV }}
+          environment: ${{ env.DEPLOY_ENV }}
     
     
     
