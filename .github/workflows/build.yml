@@ -40,4 +40,4 @@ jobs:
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           project: ${{ matrix.value }} 
           version: ${{ github.event.inputs.version }}
-          env: dev
+          environment: dev
