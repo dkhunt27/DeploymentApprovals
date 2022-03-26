@@ -18,8 +18,8 @@ jobs:
     steps:
       - id: set-matrix
         run: |
-          echo ${{ inputs.projects }}
-          echo "::set-output name=matrix::${{ inputs.projects }}"
+          echo ${{ github.event.inputs.projects }}
+          echo "::set-output name=matrix::${{ github.event.inputs.projects }}"
 
 
   create:
@@ -39,5 +39,5 @@ jobs:
         with: 
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           project: ${{ matrix.value }} 
-          version: ${{ inputs.version }}
+          version: ${{ github.event.inputs.version }}
           env: dev
