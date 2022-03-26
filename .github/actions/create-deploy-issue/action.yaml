@@ -35,5 +35,5 @@ runs:
       uses: KeisukeYamashita/attach-labels@v1
       with:
         token: ${{ inputs.githubToken }}
-        number: ${{ inputs.githubRunNumber  }}
+        number: ${{ steps.deployIssue.outputs.number  }}
         labels: ${{ inputs.project }}
