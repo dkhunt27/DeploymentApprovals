@@ -31,18 +31,19 @@ jobs:
   
   deploy-dev:
     needs: [parse]
-    if: ${{ needs.parse.outputs.deploy-environment == 'dev' }}
+    if: contains(github.event.comment.body, '/deployToDev') 
     runs-on: ubuntu-latest
-    
+    env:
+      DEPLOY_ENV: dev
     steps:
       - uses: actions/checkout@v2
                          
-      - name: Deploy to ${{ needs.parse.outputs.deploy-environment }}
+      - name: Deploy to ${{ env.DEPLOY_ENV }}
         uses: ./.github/actions/deploy
         with: 
           projects: ${{ needs.parse.outputs.projects }} 
           version: ${{ needs.parse.outputs.version }}
-          env: ${{ needs.parse.outputs.deploy-environment }}
+          env: ${{ env.DEPLOY_ENV }}
           
       - uses: JasonEtco/create-an-issue@v2
         name: Create approval Issue for test
@@ -57,18 +58,19 @@ jobs:
     
   deploy-test:
     needs: [parse]
-    if: ${{ needs.parse.outputs.deploy-environment == 'test' }}
+    if: contains(github.event.comment.body, '/deployToTest') 
     runs-on: ubuntu-latest
-    
+    env:
+      DEPLOY_ENV: test
     steps:
       - uses: actions/checkout@v2
                          
-      - name: Deploy to ${{ needs.parse.outputs.deploy-environment }}
+      - name: Deploy to ${{ env.DEPLOY_ENV }}
         uses: ./.github/actions/deploy
         with: 
           projects: ${{ needs.parse.outputs.projects }} 
           version: ${{ needs.parse.outputs.version }}
-          env: ${{ needs.parse.outputs.deploy-environment }}
+          env: ${{ env.DEPLOY_ENV }}
 
       - uses: JasonEtco/create-an-issue@v2
         name: Create approval Issue for prod
@@ -83,17 +85,18 @@ jobs:
 
   deploy-prod:
     needs: [parse]
-    if: ${{ needs.parse.outputs.deploy-environment == 'prod' }}
+    if: contains(github.event.comment.body, '/deployToProd') 
     runs-on: ubuntu-latest    
-
+    env:
+      DEPLOY_ENV: prod
     steps:
               
-      - name: Deploy to ${{ needs.parse.outputs.deploy-environment }}
+      - name: Deploy to ${{ env.DEPLOY_ENV }}
         uses: ./.github/actions/deploy
         with: 
           projects: ${{ needs.parse.outputs.projects }} 
           version: ${{ needs.parse.outputs.version }}
-          env: ${{ needs.parse.outputs.deploy-environment }}
+          env: ${{ env.DEPLOY_ENV }}
     
     
     

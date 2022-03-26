@@ -19,5 +19,9 @@ runs:
     - name: Deploy to ${{ inputs.env }}
       run: echo "Simulating Deployment ${{ inputs.projects }} ${{ inputs.version }} ${{ inputs.env }}     
         
-    - name: Close Deploy Approval Issue
-      uses: ./.github/actions/close-deploy-issue
+    - name: Update deploy issue with env labels
+      uses: KeisukeYamashita/attach-labels@v1
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        number: ${{ steps.deployIssue.outputs.number }}
+        labels: ${{ inputs.env }}

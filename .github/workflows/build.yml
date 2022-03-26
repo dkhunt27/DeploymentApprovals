@@ -21,6 +21,7 @@ jobs:
         run: echo 'hello youtube' > output.txt
           
       - name: Create an issue
+        id: deployIssue
         uses: JasonEtco/create-an-issue@v2.6.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -30,3 +31,10 @@ jobs:
           VERSION: ${{ github.event.inputs.version  }}
         with:         
           filename: .github/issues/deployment-approval.md
+
+      - name: Update deploy issue with project labels
+        uses: KeisukeYamashita/attach-labels@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ steps.deployIssue.outputs.number }}
+          labels: ${{ github.event.inputs.projects }}
