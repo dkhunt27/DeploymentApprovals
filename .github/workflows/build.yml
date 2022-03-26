@@ -10,31 +10,22 @@ on:
         description: 'version to deploy'
         required: true
 
-jobs:
-  build:
+jobs:  
+  create:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        value: ${{ inputs.projects }}
     steps:
       - uses: actions/checkout@v2
 
       - name: Simulate a Build
         run: echo 'hello youtube' > output.txt
-          
-      - name: Create an issue
-        id: deployIssue
-        uses: JasonEtco/create-an-issue@v2.6.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ENVIRONMENT: dev
-          RUN_NUMBER: ${{ github.run_number  }}
-          PROJECTS: ${{ github.event.inputs.projects  }}
-          VERSION: ${{ github.event.inputs.version  }}
-        with:         
-          filename: .github/issues/deployment-approval.md
 
-      - name: Update deploy issue with project labels
-        uses: KeisukeYamashita/attach-labels@v1
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          number: ${{ steps.deployIssue.outputs.number }}
-          labels: ${{ github.event.inputs.projects }}
+      - name: Create a deploy issue for dev
+        uses: ./.github/actions/create-deploy-issue
+        with: 
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
+          project: ${{ matrix.value }} 
+          version: ${{ inputs.version }}
+          env: dev

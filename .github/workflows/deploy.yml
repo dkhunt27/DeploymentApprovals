@@ -12,7 +12,7 @@ jobs:
     outputs:
       deploy-environment: ${{ fromJSON(steps.issue_body_parser.outputs.payload).environment }}
       ci-run-number: ${{ fromJSON(steps.issue_body_parser.outputs.payload).runNumber }}
-      projects: ${{ fromJSON(steps.issue_body_parser.outputs.payload).projects }}
+      project: ${{ fromJSON(steps.issue_body_parser.outputs.payload).project }}
       version: ${{ fromJSON(steps.issue_body_parser.outputs.payload).version }}
     steps:
       - name: Comment on Issue      
@@ -42,20 +42,9 @@ jobs:
         uses: ./.github/actions/deploy
         with: 
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          projects: ${{ needs.parse.outputs.projects }} 
+          project: ${{ needs.parse.outputs.project }} 
           version: ${{ needs.parse.outputs.version }}
           env: ${{ env.DEPLOY_ENV }}
-          
-      - uses: JasonEtco/create-an-issue@v2
-        name: Create approval Issue for test
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ENVIRONMENT: test
-          RUN_NUMBER: ${{ needs.parse.outputs.ci-run-number }}
-          PROJECTS: ${{ needs.parse.outputs.projects }}
-          VERSION: ${{ needs.parse.outputs.version }}
-        with:
-          filename: .github/issues/deployment-approval.md
     
   deploy-test:
     needs: [parse]
@@ -70,20 +59,9 @@ jobs:
         uses: ./.github/actions/deploy
         with: 
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          projects: ${{ needs.parse.outputs.projects }} 
+          project: ${{ needs.parse.outputs.project }} 
           version: ${{ needs.parse.outputs.version }}
           env: ${{ env.DEPLOY_ENV }}
-
-      - uses: JasonEtco/create-an-issue@v2
-        name: Create approval Issue for prod
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          ENVIRONMENT: prod
-          RUN_NUMBER: ${{ needs.parse.outputs.ci-run-number }}
-          PROJECTS: ${{ needs.parse.outputs.projects }}
-          VERSION: ${{ needs.parse.outputs.version }}
-        with:
-          filename: .github/issues/deployment-approval.md
 
   deploy-prod:
     needs: [parse]
@@ -97,7 +75,7 @@ jobs:
         uses: ./.github/actions/deploy
         with: 
           githubToken: ${{ secrets.GITHUB_TOKEN }}
-          projects: ${{ needs.parse.outputs.projects }} 
+          project: ${{ needs.parse.outputs.project }} 
           version: ${{ needs.parse.outputs.version }}
           env: ${{ env.DEPLOY_ENV }}
     

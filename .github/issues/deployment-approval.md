@@ -1,5 +1,5 @@
 ---
-title: Deployment Approval for {{ env.VERSION }}
+title: Deployment of v{{ env.VERSION }}
 ---
 
 Deployment Approval requested from {{ payload.sender.login }}.

@@ -1,0 +1,39 @@
+name: Create Deploy Approval Issue
+inputs:
+  githubToken:
+    description: Github token
+    required: true
+  githubRunNumber:
+    description: Github run number of issue
+    required: true
+  environment:
+    description: Environment to deploy to
+    required: true
+  project:
+    description: Project to deploy
+    required: true
+  version:
+    description: Version to deploy
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Create a deploy issue
+      id: deployIssue
+      uses: JasonEtco/create-an-issue@v2.6.0
+      env:
+        GITHUB_TOKEN: ${{ inputs.githubToken }}
+        RUN_NUMBER: ${{ inputs.githubRunNumber }}
+        ENVIRONMENT: ${{ inputs.environment }}
+        PROJECTS: ${{ inputs.project }}
+        VERSION: ${{ inputs.version }}
+      with:         
+        filename: .github/issues/deployment-approval.md
+
+    - name: Update deploy issue with project labels
+      uses: KeisukeYamashita/attach-labels@v1
+      with:
+        GITHUB_TOKEN: ${{ inputs.githubToken }}
+        number: ${{ inputs.githubRunNumber  }}
+        labels: ${{ inputs.project }}
