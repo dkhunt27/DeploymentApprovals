@@ -38,3 +38,10 @@ runs:
         token: ${{ inputs.githubToken }}
         number: ${{ inputs.issueNumber }}
         labels: ${{ inputs.environment }}
+
+    - name: Create Project Card
+      uses: peter-evans/create-or-update-project-card@v2
+      with:
+        project-name: ${{ inputs.project }}
+        column-name: Deployed To ${{ inputs.environment }}
+        issue-number: ${{ inputs.issueNumber }}
