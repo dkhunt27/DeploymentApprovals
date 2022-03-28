@@ -1,6 +1,5 @@
 ---
 title: Deployment of v{{ env.VERSION }}
-project: dkhunt27/deploymentapprovals/1 
 ---
 
 Deployment Approval requested from {{ payload.sender.login }}.
@@ -13,7 +12,7 @@ Comment "Approved" to kick the deployment off.
 {
     "runNumber":  {{ env.RUN_NUMBER }},
     "environment": "{{ env.ENVIRONMENT }}",
-    "projects": "{{ env.PROJECTS }}",
+    "project": "{{ env.PROJECT }}",
     "version": "{{ env.VERSION }}"
 }
 ```

@@ -26,7 +26,7 @@ runs:
         GITHUB_TOKEN: ${{ inputs.githubToken }}
         RUN_NUMBER: ${{ inputs.githubRunNumber }}
         ENVIRONMENT: ${{ inputs.environment }}
-        PROJECTS: ${{ inputs.project }}
+        PROJECT: ${{ inputs.project }}
         VERSION: ${{ inputs.version }}
       with:         
         filename: .github/issues/deployment-approval.md
