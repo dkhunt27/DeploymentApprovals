@@ -15,6 +15,9 @@ inputs:
   environment:
     description: 'APP_ENV to use'
     required: true
+  deployCommand:
+    description: Command to deploy
+    required: true
 
 runs:
   using: composite
@@ -43,5 +46,5 @@ runs:
       uses: peter-evans/create-or-update-project-card@v2
       with:
         project-name: ${{ inputs.project }}
-        column-name: Deployed To ${{ inputs.environment }}
+        column-name: ${{ inputs.deployCommand }}
         issue-number: ${{ inputs.issueNumber }}
