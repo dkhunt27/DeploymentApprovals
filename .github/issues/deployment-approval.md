@@ -1,5 +1,6 @@
 ---
 title: Deployment of v{{ env.VERSION }}
+project: AppA
 ---
 
 Deployment Approval requested from {{ payload.sender.login }}.
