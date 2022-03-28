@@ -46,6 +46,7 @@ jobs:
           project: ${{ needs.parse.outputs.project }} 
           version: ${{ needs.parse.outputs.version }}
           environment: ${{ env.DEPLOY_ENV }}
+          deployCommand: ${{ github.event.comment.body }}
     
   deploy-test:
     needs: [parse]
@@ -64,6 +65,7 @@ jobs:
           project: ${{ needs.parse.outputs.project }} 
           version: ${{ needs.parse.outputs.version }}
           environment: ${{ env.DEPLOY_ENV }}
+          deployCommand: ${{ github.event.comment.body }}
 
   deploy-prod:
     needs: [parse]
